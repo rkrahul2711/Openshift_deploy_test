@@ -1,15 +1,14 @@
-#Build Steps
-FROM node:alpine3.10 as build-step
-
-RUN mkdir /app
+# Builder stage
+FROM node:23-alpine AS builder
 WORKDIR /app
-
-COPY package.json /app
-RUN npm install
-COPY . /app
-
+COPY package*.json ./
+RUN npm ci
+COPY . .
 RUN npm run build
 
-#Run Steps
-FROM nginx:1.19.8-alpine  
-COPY --from=build-step /app/build /usr/share/nginx/html
+# Production stage
+FROM nginxinc/nginx-unprivileged:stable-alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+# No need for IPv6 patch, already non-root & listens on 8080
+EXPOSE 8080
+CMD ["nginx","-g","daemon off;"]
