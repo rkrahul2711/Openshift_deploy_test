@@ -1,0 +1,125 @@
+.recomcard {
+  border-radius: 8px;
+  background: #f4f5f7;
+  display: flex;
+  align-items: center;
+  padding: 20px; /* Adjust padding as needed */
+  border: 1px #ccc; /* Add border styling if desired */
+  border-radius: 8px; /* Add border-radius for rounded corners */
+  /* Add other styling properties as needed */
+  /* Medium Elevation */
+  box-shadow: 6px 6px 32px 0px rgba(64, 64, 65, 0.08);
+  width: 370px;
+  display: flex;
+  height: 390px;
+  padding: 32px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex: 1 0 0;
+  transition: background-color 0.3s ease;
+  /* background: linear-gradient(99.7deg, #FFFFFF 14.73%, #EAF0FB 142.77%);
+    box-shadow: inset; */
+}
+
+/* Add additional styles for the Image, Explore Experiments text, etc. */
+.linkstyle {
+  font-size: 16px;
+  font-family: Poppins;
+  font-weight: 400;
+  text-decoration: none;
+  color: inherit;
+  text-align: "center";
+}
+
+.linkstyle:hover {
+  text-decoration: underline; /* Add underline on hover */
+  color: #308c78;
+}
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 40px;
+}
+.loginContent {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.5; /* Adds comfortable spacing between lines */
+  letter-spacing: 0;
+}
+
+.frostedBox {
+  width: 400px;
+  height: 380px;
+  border-radius: 4px;
+
+  background: rgba(255, 255, 255, 0.2); /* Equivalent to #FFFFFF33 */
+  box-shadow: 2.85px 2.85px 11.38px 0px rgba(146, 148, 151, 0.25);
+
+  backdrop-filter: blur(42.6875px);
+  -webkit-backdrop-filter: blur(42.6875px); /* For Safari support */
+
+  opacity: 1;
+  border: 0.71px solid rgba(255, 255, 255, 0.3); /* Optional subtle border */
+}
+.heading {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 0.9px;
+  vertical-align: middle;
+  color: #FFFFFF;
+  width: 141px;
+  height: 45px;
+  position: absolute;  /* Needed for top and left to work */
+  top: 74px;
+  left: 130px;
+  opacity: 1;
+  transform: rotate(0deg); /* to represent 'angle: 0 deg' */
+}
+
+.textBlock {
+  width: 238px;
+  height: 21px;
+  opacity: 1;
+
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+ margin-top: 171px;
+    margin-left: 20px;
+  color:#FFFFFF;
+;
+}
+.signInButton {
+  width: 346px;
+  min-height: 30px; /* even smaller */
+  padding: 2px 16px; /* reduce vertical padding */
+  font-size: 12px; /* smaller font */
+  line-height: 1; /* tighten line height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 2.85px;
+  background: #D52B1E;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.signInButton:hover {
+  background: #b52318; /* darker red on hover */
+}

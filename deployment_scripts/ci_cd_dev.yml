@@ -1,0 +1,48 @@
+name: React CI/CD to OpenShift
+
+on:
+  push:
+    branches: [ dev_frontend ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Build Docker image
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.REGISTRY_URL }}/react-app:${{ github.sha }} .
+
+      # 3. Login to Registry
+      - name: Docker Login
+        run: |
+          echo ${{ secrets.REGISTRY_PASSWORD }} | docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
+
+      # 4. Push Docker Image
+      - name: Push Image
+        run: |
+          docker push ${{ secrets.REGISTRY_URL }}/react-app:${{ github.sha }}
+
+      # 5. Install OpenShift CLI
+      - name: Install OC CLI
+        run: |
+          curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz
+          tar -xzf oc.tar.gz
+          sudo mv oc /usr/local/bin/
+
+      # 6. Login to OpenShift
+      - name: OpenShift Login
+        run: |
+          oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
+
+      # 7. Update Deployment
+      - name: Update Deployment
+        run: |
+          oc project my-namespace
+          oc set image deployment/react-app react-app=${{ secrets.REGISTRY_URL }}/react-app:${{ github.sha }} --record
+          oc rollout status deployment/react-app

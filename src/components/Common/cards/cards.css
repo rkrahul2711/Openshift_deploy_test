@@ -1,0 +1,126 @@
+.Card {
+  background-color: white;
+  font-family: "Unilever Shilling";
+  border: none;
+}
+
+/* .ant-card-body {
+  padding: 0px !important;
+}
+
+.ant-card {
+  margin-bottom: 35px !important;
+  margin-left: 20px;
+  margin-right: 20px;
+} */
+
+.Card-row {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  /* justify-content: space-evenly; */
+}
+
+.values {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Card-col {
+  flex: 0 1 auto;
+  max-width: 20%;
+  display: flex;
+  /* padding-top: 10px; */
+  justify-content: center;
+}
+
+.icon-text {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* Space between icon and text */
+}
+
+.Card-title {
+  /* margin: 0; */
+  line-height: 13.2px !important;
+  margin-top: 4px !important;
+  width: "-webkit-fill-available";
+}
+.card-flex {
+  flex: 1 !important;
+  flex-wrap: nowrap;
+}
+
+.card-flex-register {
+  flex-wrap: nowrap;
+}
+
+.ant-col {
+  max-width: 100% !important;
+}
+
+.card-value {
+  white-space: nowrap;
+  text-align: center;
+  font-weight: bold;
+}
+.reusableCard {
+  display: flex;
+  flex-wrap: nowrap;
+  /* gap: 16px; */
+  /* align-items: flex-start; */
+}
+
+/* @media (max-width: 767px) {
+  .reusableCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reusableCard .ant-typography {
+    text-align: left;
+  }
+
+  .reusableCard .Card-title {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .reusableCard .ant-typography.ant-typography-level-3 {
+    font-size: 18px;
+    margin-top: 4px;
+  }
+
+  .ant-divider-vertical {
+    display: none; 
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .reusableCard {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .reusableCard .Card-title {
+    font-size: 16px;
+  }
+
+  .reusableCard .ant-typography.ant-typography-level-3 {
+    font-size: 20px;
+  }
+}
+@media (min-width: 1024px) {
+  .reusableCard {
+    flex-wrap: wrap;
+    /* gap: 16px; */
+  /* } */
+
+  /* .reusableCard .Card-title {
+    font-size: 18px;
+  }
+
+  .reusableCard .ant-typography.ant-typography-level-3 {
+    font-size: 24px;
+  } */
+/* } */ 

@@ -1,0 +1,100 @@
+name: React Single Page Application Deploy to AWS
+on:
+  push:
+    branches: [dev, qa, prod, feature-navbar, feature-dashboard]
+jobs:
+  cloudformation-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: cfn-lint-action
+        uses: ScottBrenner/cfn-lint-action@v2.2.9
+      - name: Print the Cloud Formation Linter Version & run Linter.
+        run: |
+          cfn-lint --version
+          cfn-lint --ignore-check W3011,W3002 -t ./template.yml
+      - name: Set env BRANCH
+        run: echo "BRANCH=$(echo $GITHUB_REF | cut -d'/' -f 3)" >> $GITHUB_ENV
+      - name: Set env variables
+        env:
+          PROD_DEPLOYMENT_ROLE_ARN: ${{ secrets.PROD_DEPLOYMENT_ROLE_ARN }}
+          PROD_S3_DEPLOY_BUCKET: ${{ secrets.PROD_S3_DEPLOY_BUCKET }}
+          PROD_STACK_NAME: ${{ secrets.PROD_STACK_NAME }}
+          PROD_AWS_DEPLOYMENT_REGION: ${{ secrets.PROD_AWS_DEPLOYMENT_REGION }}
+          PROD_AWS_S3_KMS_KEY_ID: ${{ secrets.PROD_AWS_S3_KMS_KEY_ID }}
+          QA_DEPLOYMENT_ROLE_ARN: ${{ secrets.QA_DEPLOYMENT_ROLE_ARN }}
+          QA_S3_DEPLOY_BUCKET: ${{ secrets.QA_S3_DEPLOY_BUCKET }}
+          QA_STACK_NAME: ${{ secrets.QA_STACK_NAME }}
+          QA_AWS_DEPLOYMENT_REGION: ${{ secrets.QA_AWS_DEPLOYMENT_REGION }}
+          QA_AWS_S3_KMS_KEY_ID: ${{ secrets.QA_AWS_S3_KMS_KEY_ID }}
+          DEV_DEPLOYMENT_ROLE_ARN: ${{ secrets.DEV_DEPLOYMENT_ROLE_ARN }}
+          DEV_S3_DEPLOY_BUCKET: ${{ secrets.DEV_S3_DEPLOY_BUCKET }}
+          DEV_STACK_NAME: ${{ secrets.DEV_STACK_NAME }}
+          DEV_AWS_DEPLOYMENT_REGION: ${{ secrets.DEV_AWS_DEPLOYMENT_REGION }}
+          DEV_AWS_S3_KMS_KEY_ID: ${{ secrets.DEV_AWS_S3_KMS_KEY_ID }}
+        run: >
+          if [[ $BRANCH == 'prod' ]]; then 
+            echo $BRANCH
+            echo "DEPLOYMENT_ENV=prod" >> "$GITHUB_ENV"
+            echo "DEPLOYMENT_ROLE_ARN=$PROD_DEPLOYMENT_ROLE_ARN" >> "$GITHUB_ENV" 
+            echo "S3_BUCKET=$PROD_S3_DEPLOY_BUCKET" >> "$GITHUB_ENV"
+            echo "STACK_NAME=$PROD_STACK_NAME" >> "$GITHUB_ENV"
+            echo "AWS_DEPLOYMENT_REGION=$PROD_AWS_DEPLOYMENT_REGION" >> "$GITHUB_ENV"
+            echo "AWS_S3_KMS_KEY_ID=$PROD_AWS_S3_KMS_KEY_ID" >> "$GITHUB_ENV"
+           elif [[ $BRANCH == 'qa' ]]; then
+            echo $BRANCH
+            echo "DEPLOYMENT_ENV=qa" >> "$GITHUB_ENV"
+            echo "DEPLOYMENT_ROLE_ARN=$QA_DEPLOYMENT_ROLE_ARN" >> "$GITHUB_ENV" 
+            echo "S3_BUCKET=$QA_S3_DEPLOY_BUCKET" >> "$GITHUB_ENV"
+            echo "STACK_NAME=$QA_STACK_NAME" >> "$GITHUB_ENV"
+            echo "AWS_DEPLOYMENT_REGION=$QA_AWS_DEPLOYMENT_REGION" >> "$GITHUB_ENV"
+            echo "AWS_S3_KMS_KEY_ID=$QA_AWS_S3_KMS_KEY_ID" >> "$GITHUB_ENV"
+           else
+            echo $BRANCH
+            echo "DEPLOYMENT_ENV=dev" >> "$GITHUB_ENV"
+            echo "DEPLOYMENT_ROLE_ARN=$DEV_DEPLOYMENT_ROLE_ARN" >> "$GITHUB_ENV" 
+            echo "S3_BUCKET=$DEV_S3_DEPLOY_BUCKET" >> "$GITHUB_ENV"
+            echo "STACK_NAME=$DEV_STACK_NAME" >> "$GITHUB_ENV"
+            echo "AWS_DEPLOYMENT_REGION=$DEV_AWS_DEPLOYMENT_REGION" >> "$GITHUB_ENV"
+            echo "AWS_S3_KMS_KEY_ID=$DEV_AWS_S3_KMS_KEY_ID" >> "$GITHUB_ENV"
+           fi
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ env.DEPLOYMENT_ROLE_ARN }}
+          aws-region: ${{ env.AWS_DEPLOYMENT_REGION }}
+      - name: sam build
+        run: sam build --template template.yml
+      - name: sam package
+        run:
+          sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${{
+          env.S3_BUCKET }} --output-template-file packaged.yaml --kms-key-id ${{
+          env.AWS_S3_KMS_KEY_ID }}
+      - name: Deploy
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: ${{ env.STACK_NAME }}
+          template: packaged.yaml
+          parameter-overrides: file://${{ github.workspace }}/params.${{ env.DEPLOYMENT_ENV }}.json
+          capabilities: CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND,CAPABILITY_NAMED_IAM
+          no-fail-on-empty-changeset: "1"
+      - name: Copy Code to AWS Bucket
+        run: |
+          npm install --legacy-peer-deps react-scripts@5
+                    
+          npm run build
+
+          export S3_BUCKET=$(aws cloudformation describe-stacks --stack-name ${{ env.STACK_NAME }} --query "Stacks[*].Outputs[?OutputKey=='WebBucket'].OutputValue" --output text)
+
+          bucket_path="s3://${S3_BUCKET}"
+
+          list_of_synced_files="files_synced.txt"
+
+          aws s3 sync dist ${bucket_path} --delete --sse AES256 > ${list_of_synced_files}
+
+      - name: S3 bucket name
+        run: echo "S3_BUCKET is the new bucket name:$S3_BUCKET"

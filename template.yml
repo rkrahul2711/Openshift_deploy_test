@@ -1,0 +1,175 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: 'AWS::Serverless-2016-10-31'
+Description: >
+  E2Elifecycle Landing Page Deployment Resources
+Parameters:
+  AppName:
+    Type: String
+  CloudFrontAccessPrefix:
+    Type: String
+    Default: PUBLIC
+    AllowedPattern: "[a-zA-Z0-9-]+"
+    ConstraintDescription: "must contain only alphanumerics and hyphens and cannot be empty"
+  DeployEnvironment:
+    Type: String
+  Deploymentrolearn:
+    Type: String
+  CloudFrontPriceClass:
+        Type: String
+        Default: PriceClass_100
+        AllowedValues:
+            - PriceClass_100
+            - PriceClass_200
+            - PriceClass_All
+  EmptyWebBucketOnDelete:
+    Description: Empty the web bucket on stack deletion, which allows the bucket to be deleted.
+    Type: String
+  CostCenter:
+    Type: String
+  CostCenterApprover:
+    Type: String
+  SystemOwner:
+    Type: String
+  SystemCustodian:
+    Type: String
+  PrimaryItContact:
+    Type: String
+  Level1BusinessArea:
+    Type: String
+  PublicHostedZoneId:
+    Type: String
+  ApplicationDomain:
+    Type: String
+  DataClassification:
+    Type: String
+    AllowedValues:
+      - "Green"
+      - "Yellow"
+      - "Orange"
+      - "Red"
+      - "TBD"
+  Hipaa:
+    Type: String
+    AllowedValues:
+      - "Yes"
+      - "No"
+      - "TBD"
+
+Resources:
+  WebsiteCloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+        - Ref: ApplicationDomain
+        ViewerCertificate:
+          AcmCertificateArn:
+            Ref: Certificate
+          MinimumProtocolVersion: TLSv1.2_2019
+          SslSupportMethod: sni-only
+        DefaultCacheBehavior:
+          Compress: true
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          ForwardedValues:
+            QueryString: false
+          ViewerProtocolPolicy: redirect-to-https
+          TargetOriginId: S3WebsiteOrigin
+        DefaultRootObject: index.html
+        Enabled: true
+        Origins:
+          - DomainName: !Sub
+            - "${BucketName}.s3.amazonaws.com"
+            - { BucketName: !Ref WebS3Bucket }
+            Id: S3WebsiteOrigin
+            OriginPath: !Join
+              - ""
+              - - /
+                - !Ref CloudFrontAccessPrefix
+            S3OriginConfig:
+              OriginAccessIdentity: !Join
+                - ""
+                - - origin-access-identity/cloudfront/
+                  - !Ref CloudFrontAccessIdentity
+        PriceClass: !Ref CloudFrontPriceClass
+        CustomErrorResponses:
+          -
+            ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: "/index.html"
+  
+  CloudFrontAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Sub "${AppName} CloudFront Origin Identity"
+
+  WebS3Bucket:
+    Type: Custom::LillyBucketBuilder
+    Properties:
+      ServiceToken: !ImportValue RVM-LambdaARN
+      BucketNamePrefix: !Ref AppName
+      BucketAccess:
+        ReadWriteAccess:
+          '*':
+            - !Ref Deploymentrolearn
+        PermissionScopes:
+          Account: false
+      CloudFrontAccess:
+        CanonicalUser: !GetAtt "CloudFrontAccessIdentity.S3CanonicalUserId"
+        Prefix: !Ref CloudFrontAccessPrefix
+      BucketConfiguration:
+        EmptyBucketOnDelete: !Ref EmptyWebBucketOnDelete
+      Tags:
+        CostCenter: !Ref CostCenter
+        CostCenterApprover: !Ref CostCenterApprover
+        SystemOwner: !Ref SystemOwner
+        SystemCustodian: !Ref SystemCustodian
+        PrimaryItContact: !Ref PrimaryItContact
+        Level1BusinessArea: !Ref Level1BusinessArea
+        DataClassification: !Ref DataClassification
+        Hipaa: !Ref Hipaa
+
+  Route53Record:
+    Type: AWS::Route53::RecordSet
+    Properties: 
+      AliasTarget: 
+        DNSName: !GetAtt "WebsiteCloudFront.DomainName"
+        HostedZoneId: Z2FDTNDATAQYW2
+      HostedZoneId: !Ref PublicHostedZoneId
+      Name: !Ref ApplicationDomain
+      Type: A
+    Metadata:
+      SamResourceId: Route53Record
+ 
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties: 
+      DomainName: !Ref ApplicationDomain
+      DomainValidationOptions: 
+        - DomainName: !Ref ApplicationDomain
+          HostedZoneId: !Ref PublicHostedZoneId
+      ValidationMethod: DNS  
+    Metadata:
+      SamResourceId: Certificate   
+        
+
+Outputs:
+  CloudFrontUrl:
+    Value: !Sub
+      - "https://${Domain}"
+      - { Domain: !GetAtt "WebsiteCloudFront.DomainName" }
+  CloudFrontId:
+    Value: !Ref WebsiteCloudFront
+  WebBucket:
+    Description: Location to put SPA static files
+    Value: !Join
+             - ""
+             - - !Ref WebS3Bucket
+               - "/"
+               - !Ref CloudFrontAccessPrefix
+  DeployEnvironment:
+    Value: !Ref DeployEnvironment
+    

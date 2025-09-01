@@ -1,0 +1,43 @@
+.page-content {
+  flex: 1;
+}
+.common-heading {
+  color: var(--lds-color-primary);
+  font-weight: 600;
+}
+.common-sub-heading {
+  font-weight: 400;
+}
+.loading-css {
+  height: 100vh;
+}
+
+.btn-icon-css {
+  width: 22px;
+  height: 22px;
+  padding-right: 30px;
+  &-red {
+    @extend .btn-icon-css;
+    background-color: var(--lds-color-primary);
+  }
+  &-white {
+    @extend .btn-icon-css;
+    background-color: var(--lds-color-neutral-000);
+  }
+  &-black {
+    @extend .btn-icon-css;
+    background-color: var(--lds-color-neutral-090);
+  }
+  &-green {
+    @extend .btn-icon-css;
+    background-color: var(--lds-color-green-040);
+  }
+}
+
+// For Accessibility Purposes
+:root {
+  --lds-color-calendar-weekend-label: var(--lds-color-neutral-060);
+  --lds-color-pagination-text: var(--lds-color-neutral-060);
+}
+
+

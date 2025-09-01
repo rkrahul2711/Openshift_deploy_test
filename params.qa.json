@@ -1,0 +1,12 @@
+[{"ParameterKey":"EmptyWebBucketOnDelete","ParameterValue":"true"},
+{"ParameterKey":"DeployEnvironment","ParameterValue":"qa"},
+{"ParameterKey":"AppName","ParameterValue":"react-spa-qa"},
+{"ParameterKey":"CostCenter","ParameterValue":"C000001CA"},
+{"ParameterKey":"CostCenterApprover","ParameterValue":"C000002"},
+{"ParameterKey":"SystemOwner","ParameterValue":"C000003"},
+{"ParameterKey":"SystemCustodian","ParameterValue":"C000004"},
+{"ParameterKey":"PrimaryItContact","ParameterValue":"C000005"},
+{"ParameterKey":"Level1BusinessArea","ParameterValue":"C000006"},
+{"ParameterKey":"DataClassification","ParameterValue":"Yellow"},
+{"ParameterKey":"Deploymentrolearn","ParameterValue":"arn:aws:iam::572919966719:role/ReactspaDeployRole"},
+{"ParameterKey":"Hipaa","ParameterValue":"Yes"}]

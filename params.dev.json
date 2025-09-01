@@ -1,0 +1,19 @@
+[
+  { "ParameterKey": "EmptyWebBucketOnDelete", "ParameterValue": "true" },
+  { "ParameterKey": "DeployEnvironment", "ParameterValue": "dev" },
+  { "ParameterKey": "AppName", "ParameterValue": "ibu-accessibility-app" },
+  { "ParameterKey": "CostCenter", "ParameterValue": "C000001" },
+  { "ParameterKey": "CostCenterApprover", "ParameterValue": "C000002" },
+  { "ParameterKey": "SystemOwner", "ParameterValue": "C000003" },
+  { "ParameterKey": "SystemCustodian", "ParameterValue": "C000004" },
+  { "ParameterKey": "PrimaryItContact", "ParameterValue": "C000005" },
+  { "ParameterKey": "Level1BusinessArea", "ParameterValue": "C000006" },
+  { "ParameterKey": "DataClassification", "ParameterValue": "Yellow" },
+  {
+    "ParameterKey": "Deploymentrolearn",
+    "ParameterValue": "arn:aws:iam::446711406787:role/IBU-LDS-COMPONENTS-Deployment-Role"
+  },
+  {"ParameterKey":"ApplicationDomain","ParameterValue":"app.dev.ibu-lds.lilly.com"},
+  {"ParameterKey":"PublicHostedZoneId","ParameterValue":"Z046620321CDW2AZNCTKB"},
+  { "ParameterKey": "Hipaa", "ParameterValue": "No" }
+]

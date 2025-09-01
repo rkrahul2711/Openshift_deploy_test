@@ -1,0 +1,20 @@
+[
+  { "ParameterKey": "EmptyWebBucketOnDelete", "ParameterValue": "true" },
+  {
+    "ParameterKey": "DeployEnvironment",
+    "ParameterValue": "feature-dashboard"
+  },
+  { "ParameterKey": "AppName", "ParameterValue": "ibu-accessibility-app" },
+  { "ParameterKey": "CostCenter", "ParameterValue": "C000001" },
+  { "ParameterKey": "CostCenterApprover", "ParameterValue": "C000002" },
+  { "ParameterKey": "SystemOwner", "ParameterValue": "C000003" },
+  { "ParameterKey": "SystemCustodian", "ParameterValue": "C000004" },
+  { "ParameterKey": "PrimaryItContact", "ParameterValue": "C000005" },
+  { "ParameterKey": "Level1BusinessArea", "ParameterValue": "C000006" },
+  { "ParameterKey": "DataClassification", "ParameterValue": "Yellow" },
+  {
+    "ParameterKey": "Deploymentrolearn",
+    "ParameterValue": "arn:aws:iam::572919966719:role/IBU-LDS-COMPONENTS-DeployRole"
+  },
+  { "ParameterKey": "Hipaa", "ParameterValue": "No" }
+]

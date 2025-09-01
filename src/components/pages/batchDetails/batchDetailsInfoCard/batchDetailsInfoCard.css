@@ -1,0 +1,67 @@
+/*red button*/
+.completed-red {
+  font-size: 10px;
+  font-weight: 400;
+  border-radius: 4px;
+  border: 0.5px solid rgb(255, 76, 76);
+  color: rgb(255, 76, 76);
+  text-align: center;
+  line-height: 14px;      /* smaller line height for less height */
+  padding: 2px 0px;       /* less vertical padding */
+  width: 80px;
+  height: auto;
+       /* override any min-height */
+  
+  margin-left: 5px;
+}
+
+/* Disable hover, focus, and active style changes */
+.completed-red:hover,
+.completed-red:focus,
+.completed-red:active {
+  color: rgb(255, 76, 76) !important;
+  border-color: rgb(255, 76, 76) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Optional: override Ant Design default min-height */
+.completed-red.ant-btn {
+  min-height: 14px;
+}
+/* green button*/
+.completed-green {
+  font-size: 10px;
+  font-weight: 400;
+  border-radius: 4px;
+  border: 0.5px solid  #4CAF50;
+  color: #4CAF50;
+  text-align: center;
+  line-height: 14px;      /* smaller line height for less height */
+  padding: 2px 0px;       /* less vertical padding */
+  width: 80px;
+  height: auto;
+       /* override any min-height */
+  
+  margin-left: 5px;
+}
+
+/* Disable hover, focus, and active style changes */
+.completed-green:hover,
+.completed-green:focus,
+.completed-green:active {
+  color:#4CAF50 !important;
+  border-color: #4CAF50 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Optional: override Ant Design default min-height */
+.completed-green.ant-btn {
+  min-height: 14px;
+}
+.spaced-element {
+  margin-left: 4px; /* You can adjust the spacing value here */
+}

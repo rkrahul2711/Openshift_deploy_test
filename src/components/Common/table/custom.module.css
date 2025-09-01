@@ -1,0 +1,56 @@
+.custom-pagination-btn {
+  color: #1890ff;
+  margin: 0 8px;
+  font-weight: bold;
+}
+
+.custom-pagination-btn:hover {
+  color: #40a9ff;
+}
+
+.ant-pagination-item {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 0 12px;
+}
+
+.ant-pagination-item-active {
+  background-color: #1890ff;
+  border-color: #1890ff;
+}
+
+.ant-pagination-item-active a {
+  color: #fff;
+}
+
+.ant-pagination-item:hover {
+  border-color: #40a9ff;
+}
+
+.ant-pagination-prev,
+.ant-pagination-next {
+  padding: 0 8px;
+  font-family: "Unilever Shilling";
+}
+
+.ant-pagination-prev a,
+.ant-pagination-next a {
+  font-weight: bold;
+  font-family: "Unilever Shilling";
+}
+
+.custom-row {
+  background-color: white;
+  margin-bottom: 2px;
+  height: 3rem;
+  font-family: "Unilever Shilling";
+}
+
+.ant-table-thead > tr > th {
+  background-color: #f0f0f0; /* Light gray background */
+  color: #333; /* Dark text */
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid #d9d9d9; /* Border color */
+  max-height: 20px !important;
+}

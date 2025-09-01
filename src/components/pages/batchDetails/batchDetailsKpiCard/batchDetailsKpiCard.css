@@ -1,0 +1,195 @@
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-tab {
+  border-radius: 0 !important;
+  border-top: 0.5px solid #D7D7D7 !important;
+  border-left: 0.5px solid #D7D7D7 !important;
+  border-right: 0.5px solid #D7D7D7 !important;
+  border-bottom: none !important;
+  background: #FFF !important;
+  padding: 10px 12px !important;
+  font-size: 14px;
+  line-height: 1.2;
+   font-style: 'Regular';
+  font-family: 'Poppins';
+  margin: 0 !important;
+  width: 161px;
+  font-size: 400;
+  box-sizing: border-box;
+}
+
+/* Remove padding/margin above the tab list */
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-nav,
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-nav-list {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* First tab gets top border and rounded top-left corner */
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-tab:first-child {
+  border-top: 0.5px solid #D7D7D7 !important;
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+}
+
+/* Last tab gets bottom border and rounded bottom-left corner */
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-tab:last-child {
+  border-bottom: 0.5px solid #D7D7D7 !important;
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Hide default Ant Design ink bar on vertical tabs */
+.custom-vertical-tabs .ant-tabs-ink-bar {
+  display: none !important;
+}
+
+/* Active tab style: transparent background + black text + blue underline */
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-tab-active {
+  background: transparent !important;  /* remove gray background */
+  font-weight: 400;
+ 
+  color: black !important;
+  position: relative; /* needed for underline */
+}
+
+/* Blue bottom underline on active tab */
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #1677ff; /* blue underline */
+  border-radius: 2px;
+}
+
+/* Horizontal tabs styling unchanged */
+.custom-horizontal-tabs .ant-tabs-nav {
+  border-radius: 8px;
+  border: 1px solid #D7D7D7;
+  background: #FFF;
+  font-size: 400;
+  font-style: Regular;
+  font-family: 'Poppins';
+  padding: 4px 12px; /* optional: spacing inside tab bar */
+  margin-bottom: 16px; /* optional: space below tabs */
+}
+
+/* Remove default bottom border to avoid double borders */
+.custom-horizontal-tabs .ant-tabs-nav-wrap {
+  border-bottom: none !important;
+}
+.custom-horizontal-tabs.ant-tabs-top .ant-tabs-tab {
+  padding: 8px 16px; /* Increase horizontal space for all tabs */
+  min-width: 120px;  /* Optional: set a minimum width */
+  box-sizing: border-box;
+}
+
+/* Style only the active tab */
+.custom-horizontal-tabs.ant-tabs-top .ant-tabs-tab-active {
+  border-radius: 8px;
+  background: #1E61D5;
+  color: white;
+}
+
+/* Make sure the label inside gets the correct color */
+.custom-horizontal-tabs.ant-tabs-top .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white !important;
+}
+.custom-horizontal-tabs .ant-tabs-ink-bar {
+  display: none !important;
+}
+.custom-horizontal-tabs.ant-tabs-top .ant-tabs-tab-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+/* Make all vertical tab text black */
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-tab .ant-tabs-tab-btn {
+  color: black !important;
+}
+.custom-horizontal-tabs.ant-tabs-top .ant-tabs-tab {
+  margin-right: -24px !important; /* reduce from default 16px */
+  padding: 8px 12px; /* optional: tighter padding */
+}
+
+/* Ensure active tab text is also black */
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: black !important;
+}
+.custom-kpi-table .ant-table-thead > tr > th {
+  background-color: #D7D7D7 !important;
+  border: 0.5px solid #E6E7E8 !important;
+  color: black !important;
+  font-weight: 500;
+  font-family: 'Poppins';
+  font-style: Medium;
+  border-radius: 0 !important; /* remove border-radius */
+  height: 39px;                /* set header height */
+  padding: 4px 8px !important; /* reduce padding for smaller height */
+  line-height: 1.2;
+}
+.custom-kpi-table .ant-table-tbody > tr > td {
+  
+  font-weight: 400;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-size: 12px;
+}
+
+/* Remove border-radius on first and last headers */
+.custom-kpi-table .ant-table-thead > tr > th:first-child,
+.custom-kpi-table .ant-table-thead > tr > th:last-child {
+  border-radius: 0 !important;
+}
+.custom-vertical-tabs.ant-tabs-left .ant-tabs-tab {
+  width: 200px;
+}
+
+.custom-horizontal-tabs.ant-tabs.ant-tabs-top {
+  padding-left: 32px; /* ✅ no quotes */
+}
+.compact-row td {
+   padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  height: 24px !important;  /* very small height */
+  line-height: 1;
+  font-size: 12px;          /* smaller font if needed */
+  white-space: nowrap;      /* avoid wrapping if needed */
+}
+
+.circle-green {
+  border: 1px solid green;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: black;
+  font-weight: 500;
+}
+
+.responsive-modal .ant-modal-content {
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Poppins';
+}
+.info-container p {
+  margin: 4px 0; /* reduce vertical space between lines */
+  line-height: 1.2; /* tighter line height */
+  font-family: 'Poppins';
+ 
+}
+
+.info-container {
+  margin-bottom: 16px; /* space between the first div and second div */
+  margin-top: 30px;
+}
+.content-container{
+ margin-top: 15px; 
+}
+
